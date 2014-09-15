@@ -1,0 +1,85 @@
+<html>
+<head>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+
+<style type="text/css">
+<!--
+body	{ background-color:#ffffff; 	font-family: verdana,arial, helvetica, geneva, sans-serif;}
+h1	{ text-align:center; }
+pre	{ background-color:#eeeeee; border:1px; /*font-weight:bold;*/
+	  border-style:solid; padding:10px; font-size: 1.2em;
+	}
+pre.term	{ background-color:#000000; color:#ffffff; border:1px; /*font-weight:bold;*/
+	  border-style:solid; padding:10px; 
+	}
+li	{ margin-bottom:1.5em; list-style-type:none; }
+ul	{ margin-top:1.5em; }
+code    { font-weight:bold; }
+div.content	{ position:absolute; top:25px; left:5px; width:95% }
+div.topbar	{ position:fixed; top:0px; left:0px; width:100%; z-index:9;
+		  text-align:center; background-color:#[% me.opts.irc ? 'ff' : 'cc' %]cccc;
+                  border-bottom:1px solid black; text-size:small;
+		}
+div.breadcrumb  { text-size:small; }
+div.topbar a:link, a:visited, a:hover,
+div.breadcrumb a:link, a:visited, a:hover
+         { text-decoration:none; color:#0000ff; }
+
+-->
+</style>
+
+<script language="JavaScript">
+function taste(hitit)
+{
+ var key=hitit.which;
+ if (key == 13 || key == 34) {
+     self.location="[% me.next_slide %]#fokus";
+}
+ if (key == 8 || key == 33) {
+	self.location="[% me.prev_slide %]#fokus";
+ }
+ 
+}
+document.onkeydown = taste;
+
+[% IF me.opts.irc %]
+var http_request = false;
+function StreamSlide() {
+    var slide = "[% me.rawtext.replace('"','ESCQUOTE').replace("\n","ESCNEWLINE").replace(";","ESCSEMI") %]";
+    netscape.security.PrivilegeManager.enablePrivilege("UniversalBrowserRead");
+    http_request = false;
+    http_request = new XMLHttpRequest();
+    http_request.open('POST', 'http://localhost:8080/', true);
+    http_request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    http_request.setRequestHeader("Content-length", slide.length);
+    http_request.setRequestHeader("Connection", "close");
+    http_request.send(slide);
+    document.getElementById('topbar').style.backgroundColor="#cccccc";
+}
+
+[% END %]
+</script>
+
+<title>[% me.title %]</title>
+
+</head>
+<body [% IF me.opts.irc %]onLoad="StreamSlide()"[% END %]> 
+<div class='topbar' id='topbar'>
+[% IF me.prev_slide %]<a href='[% me.prev_slide %]#fokus'>prev &lt;&lt;</a> [%END %]
+<b><a href="index.html">[% me.title %]</a></b>
+[%+ IF me.next_slide %]<a href='[% me.next_slide %]#fokus'>&gt;&gt; next</a> [%END %]
+</div>
+<div class='content'>
+
+[% me.current_heading %]
+
+<ul>
+[% me.oldtext %]
+[% me.thistext %]
+<a name='fokus'></a>
+
+</ul>
+</div>
+
+</body>
+</html>

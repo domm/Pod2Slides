@@ -1,0 +1,95 @@
+<html>
+<head>
+<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+
+<style type="text/css">
+<!--
+body	{ background-color:#ffffff; 	font-family: verdana,arial, helvetica, geneva, sans-serif;
+    margin:0px;
+    font-size: 30px;
+    width:1020px;
+}
+h1	{ text-align:center; }
+h2	{ margin: 0em;margin-left: 20px; }
+h3	{ margin: 0em;margin-left: 20px; }
+h4	{ margin: 0em;margin-left: 20px; }
+pre	{ background-color:#eeeeee; border:1px; /*font-weight:bold;*/
+	  border-style:solid; padding:10px;
+    margin-left:1.5em;
+    width:960px;
+    font-size: 24px;
+}
+li	{ margin-bottom:1.5em; margin-left:1.5em; list-style-type:none; }
+ul	{ margin-top:0;margin-left:0 }
+code    { font-weight:bold; }
+div.content	{
+    position:absolute;
+    top:0px;
+    left:0px;
+    width:1000px;
+    font-size:30px;
+}
+div.preview_1024 {
+    width:1024px;
+    height: 768px;
+    left:0px;
+    top:0px;
+    z-index:1;
+    border: 3px;
+    border-color:#bbb;
+    border-style: solid;
+}
+.bigfont {
+    font-size: 2em;
+    margin-left:1.5em;
+}
+-->
+</style>
+
+<script language="JavaScript">
+function taste(hitit)
+{
+ var key=hitit.which;
+ if (key == 13 || key == 34) {
+     self.location="[% me.next_slide %]";
+}
+ if (key == 8 || key == 33) {
+	self.location="[% me.prev_slide %]";
+ }
+ 
+}
+document.onkeydown = taste;
+
+[% IF me.opts.irc %]
+var http_request = false;
+function StreamSlide() {
+    var slide = "[% me.rawtext.replace('"','ESCQUOTE').replace("\n","ESCNEWLINE").replace(";","ESCSEMI") %]";
+    netscape.security.PrivilegeManager.enablePrivilege("UniversalBrowserRead");
+    http_request = false;
+    http_request = new XMLHttpRequest();
+    http_request.open('POST', 'http://localhost:8080/', true);
+    http_request.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    http_request.setRequestHeader("Content-length", slide.length);
+    http_request.setRequestHeader("Connection", "close");
+    http_request.send(slide);
+    document.getElementById('topbar').style.backgroundColor="#cccccc";
+}
+
+[% END %]
+</script>
+
+<title>[% me.title %]</title>
+
+</head>
+<body [% IF me.opts.irc %]onLoad="StreamSlide()"[% END %]> 
+
+[% IF me.opts.preview == 1024 %]<div class='preview_1024'></div>[% END %]
+
+<div class='content'>
+
+[% me.oldtext %]
+[% me.thistext %]
+</div>
+
+</body>
+</html>

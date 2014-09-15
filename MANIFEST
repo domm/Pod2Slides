@@ -1,0 +1,15 @@
+.cvsignore
+bin/pod2slides.pl
+Build.PL
+Changes
+lib/Pod2Slides.pm
+MANIFEST
+META.yml			# Will be created by "make dist"
+README
+t/00.load.t
+t/pod-coverage.t
+t/pod.t
+tags
+templates/boilerplate.tt
+templates/default.tt
+templates/fullscreen.tt
