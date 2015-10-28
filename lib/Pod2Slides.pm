@@ -267,7 +267,7 @@ sub handle_head {
 
 sub handle_para {
     my ($me,$text)=@_;
-    $text=~s|^(http://.*)|<a href="$1">$1</a>|;
+    $text=~s|^(https?://.*)|<a href="$1">$1</a>|;
     $me->thistext("<li>$text</li>\n");
     $me->write_slide;
 }
@@ -468,6 +468,7 @@ sub highlight {
     $text=~s/>/&gt;/g;
 	$text=~s/</&lt;/g;
     $text=~s{^(\s+)([~/](.*?)\$)(.*)}{$1<font color='#00cc00'>$2</font><font color='#cc0000'>$4</font>}mg;
+    $text=~s{^(\s+)([\w\.]+:[~/](.*?)\$)(.*)}{$1<font color='#00cc00'>$2</font><font color='#cc0000'>$4</font>}mg;
 	$text=~s{^(\s+)(file:.*)}{$1<font color='#aa0000'>$2</font>}g;
 	$text=~s{\*\*(.*?)\*\*}{<b><font color='#ff0000'>$1</font></b>}gs;
 	$text=~s{\%\%(.*?)\%\%}{<b><font color='#0000ff'>$1</font></b>}gs;
@@ -567,7 +568,7 @@ sub make_tarball {
     my $this_dir=`pwd`;;
     $this_dir=~s|^.*/||;
     chdir('..');
-    system("tar czf ".$arch." --exclude='.svn' ".$this_dir);
+    system("tar czf ".$arch." --exclude='.svn' --exclude=*.tar.gz --exclude=bin/local ".$this_dir);
     system("mv ".$arch." $this_dir");
 
     print "created archive $arch\n" unless $me->opts->{quiet};
