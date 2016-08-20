@@ -365,19 +365,30 @@ sub handle_for_include_fragment {
     }
     my %hl;
     foreach(@opts) {
-        my ($ln,$def)=$_=~/^([\d\.]+):(.*)/;
-        if ($ln =~ /\.\./) {
-            my ($ln_f,$ln_t)=$ln=~/(\d+)\.\.(\d+)/;
-            foreach my $tln ($ln_f .. $ln_t) {
-                $hl{$tln}=[reverse split(/;/,$def)];
+        if ($_ =~ /^hl/) {
+            my ($hl,@lines)=split(/[:,]/,$_);
+            my %highlight = map { $_=>1} @lines;
+
+            for my $linenum ($from .. $to) {
+                $hl{$linenum } = ["1-100:".($highlight{$linenum} ? "red" : "grey")];
             }
-        } else {
-            $hl{$ln}=[reverse split(/;/,$def)];
+        }
+        else {
+            my ($ln,$def)=$_=~/^([\d\.]+):(.*)/;
+            if ($ln =~ /\.\./) {
+                my ($ln_f,$ln_t)=$ln=~/(\d+)\.\.(\d+)/;
+                foreach my $tln ($ln_f .. $ln_t) {
+                    $hl{$tln}=[reverse split(/;/,$def)];
+                }
+            } else {
+                $hl{$ln}=[reverse split(/;/,$def)];
+            }
         }
     }
 
     # add line numbers and coloring
     my $linenum=$from;
+
     foreach my $line (@selected) {
         if (my $colored=$hl{$linenum}) {
             foreach my $col (@$colored) {
@@ -387,6 +398,7 @@ sub handle_for_include_fragment {
                 my $bold = $color eq 'grey' ? '' : 'BOLD';
                 substr($line,$end,0,'////END'.$bold);
                 substr($line,$start,0,"////$color/$bold/");
+                warn $line;
             }
         }
         $line=sprintf($format,$linenum).$line;
