@@ -398,7 +398,6 @@ sub handle_for_include_fragment {
                 my $bold = $color eq 'grey' ? '' : 'BOLD';
                 substr($line,$end,0,'////END'.$bold);
                 substr($line,$start,0,"////$color/$bold/");
-                warn $line;
             }
         }
         $line=sprintf($format,$linenum).$line;
@@ -485,6 +484,7 @@ sub highlight {
 	$text=~s{\*\*(.*?)\*\*}{<b><font color='#ff0000'>$1</font></b>}gs;
 	$text=~s{\%\%(.*?)\%\%}{<b><font color='#0000ff'>$1</font></b>}gs;
 	$text=~s{\@\@(.*?)\@\@}{<b><font color='#ff00ff'>$1</font></b>}gs;
+	$text=~s{___(.*?)___}{<b><font color='#aaaaaa'>$1</font></b>}gs;
     return $text;
 }
 
