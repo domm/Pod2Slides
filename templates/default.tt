@@ -1,6 +1,9 @@
 <html>
 <head>
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
+[% IF me.prev_slide %]<link href='[% me.prev_slide %]#fokus' rel='prev' />[%END %]
+[% IF me.next_slide %]<link href='[% me.next_slide %]#fokus' rel='next' />[%END %]
+</div>
 
 <style type="text/css">
 <!--

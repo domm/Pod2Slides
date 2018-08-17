@@ -13,6 +13,7 @@
 </tr></table>
 <br>
 <h2><a href='s00002.html'>Start</a></h2>
+<p style="font-size:smaller">hit "Enter" for next page and "Backspace" to go back</p>
 
 <p style="font-size:15px"><a href='[% me.meta.archive_name %].tar.gz'>Download all slides</a> | <a href='[% me.meta.source_pod %]'>Source POD-File</a></p>
 
