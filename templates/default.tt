@@ -65,9 +65,9 @@ function StreamSlide() {
 </head>
 <body [% IF me.opts.irc %]onLoad="StreamSlide()"[% END %]> 
 <div class='topbar' id='topbar'>
-[% IF me.prev_slide %]<a href='[% me.prev_slide %]#fokus'>prev &lt;&lt;</a> [%END %]
+[% IF me.prev_slide %]<a href='[% me.prev_slide %]#fokus'  rel='prev'>prev &lt;&lt;</a> [%END %]
 <b><a href="index.html">[% me.title %]</a></b>
-[%+ IF me.next_slide %]<a href='[% me.next_slide %]#fokus'>&gt;&gt; next</a> [%END %]
+[%+ IF me.next_slide %]<a href='[% me.next_slide %]#fokus' rel='next'>&gt;&gt; next</a> [%END %]
 </div>
 <div class='content'>
 
