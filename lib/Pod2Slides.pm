@@ -13,7 +13,7 @@ use Text::Autoformat;
 use Path::Class;
 use utf8;
 
-__PACKAGE__->mk_accessors(qw(file podfile poddir cnt node opts thistext oldtext  tt root meta title head_level current_heading boilerplate has_locallib));
+__PACKAGE__->mk_accessors(qw(file podfile poddir cnt node opts thistext oldtext  tt root meta title head_level current_heading boilerplate has_locallib all));
 
 =head1 NAME
 
@@ -101,7 +101,26 @@ sub generate {
     }
     $me->write_lastpage;
 
+    $me->write_all_in_one;
+
     $me->make_tarball;
+}
+
+sub write_all_in_one {
+    my $me = shift;
+
+    my $all;
+    $me->tt->process(
+		 'all_in_one.tt',
+            { 
+                me=>$me,
+            },
+                \$all)
+          ||  return die "Template Error: ".$me->tt->error."\n";
+
+    open(OUT,">:encoding(UTF-8)",$me->meta->{archive_name}.".html");
+    print OUT $all;
+    close OUT;
 }
 
 sub process {
@@ -192,6 +211,8 @@ sub write_slide {
 
     $me->addtext($me->thistext);
 
+    $me->addall($me->thistext);
+
 }
 
 sub inc_cnt {
@@ -264,6 +285,7 @@ sub handle_head {
     $me->rawtext("*$text*");
     $me->current_heading($h);
     $me->oldtext('');$me->thistext('');
+    $me->addall($h);
     $me->write_slide;
 }
 
@@ -473,6 +495,11 @@ sub handle_for_ignore { }
 sub addtext {
     my ($me,$text)=@_;
     $me->oldtext(($me->oldtext||'')."\n".$text);
+}
+
+sub addall {
+    my ($me,$text)=@_;
+    $me->all($me->all . $text);
 }
 
 sub highlight {

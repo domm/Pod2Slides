@@ -13,3 +13,4 @@ tags
 templates/boilerplate.tt
 templates/default.tt
 templates/fullscreen.tt
+templates/all_in_one.tt
