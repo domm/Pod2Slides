@@ -79,7 +79,7 @@ function StreamSlide() {
 <ul>
 [% me.oldtext %]
 [% me.thistext %]
-<a name='fokus'></a>
+[% IF set_focus %]<a name='fokus'></a>[% END %]
 
 </ul>
 </div>

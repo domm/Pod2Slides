@@ -172,13 +172,15 @@ Writes a single slide
 =cut
 sub write_slide {
     my $me=shift;
-    my $tmpl=shift || $me->opts->{'template'};
+    my $no_focus = shift;
+    my $tmpl= $me->opts->{'template'};
     
     my $done;
     $me->tt->process(
 		 $tmpl,
             { 
                 me=>$me,
+                set_focus => $no_focus ? 0 : 1,
             },
                 \$done)
           ||  return die "Template Error: ".$me->tt->error."\n";
@@ -319,7 +321,7 @@ sub handle_for_img {
     my $img=$me->node->[2][2];
     $me->rawtext($me->meta->{URL_slides}.'/'.$img);
     $me->thistext("<img src='$img'><br><br>");
-    $me->write_slide;
+    $me->write_slide('no-focus');
 }
 
 sub handle_for_include_code {
