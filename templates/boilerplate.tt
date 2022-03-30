@@ -12,7 +12,7 @@
 <td align='center'>[%me.meta.Email %]</td>
 </tr></table>
 <br>
-<h2><a href='s00002.html'>Start Slideshow</a> | <a href="[% me.meta.archive_name %].html">All in one HTML</a></h2>
+<h2><a href='s00002.html' rel="nofollow">Start Slideshow</a> | <a href="[% me.meta.archive_name %].html">All in one HTML</a></h2>
 <p style="font-size:smaller">hit "Enter" for next page and "Backspace" to go back</p>
 
 <p style="font-size:15px"><a href='[% me.meta.archive_name %].tar.gz'>Download all slides</a> | <a href='[% me.meta.source_pod %]'>Source POD-File</a></p>
