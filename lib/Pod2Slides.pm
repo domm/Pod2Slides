@@ -141,7 +141,6 @@ sub process {
     }
 
     if ($me->can($type)) {
-        $me->rawtext($text);
         $me->$type($text);
     } else {
         print "Cannot handle $type\n";
@@ -267,7 +266,6 @@ sub handle_head1 {
           ||  return die "Template Error: ".$me->tt->error."\n";
         $me->thistext($boilerplate);
         $me->boilerplate($boilerplate);
-        $me->rawtext($me->title);
         $me->write_slide(); 
     } else {
         $me->oldtext('');
@@ -282,9 +280,9 @@ sub handle_head {
     $me->oldtext('');
     my $l=$me->head_level;
     my $h="<h$l>$text</h$l>";
-    $me->rawtext("*$text*");
     $me->current_heading($h);
-    $me->oldtext('');$me->thistext('');
+    $me->oldtext('');
+    $me->thistext('');
     $me->addall($h);
     $me->write_slide;
 }
@@ -300,7 +298,6 @@ sub handle_item { shift->handle_para(@_) }
 sub handle_verbatim {
     my $me=shift;
     my $text=$me->node->[2];
-    $me->rawtext($text);
     $me->thistext("<pre>".$me->highlight($text)."</pre>");
     $me->write_slide;
 }
@@ -325,7 +322,6 @@ sub handle_for_newslide {
 sub handle_for_html {
     my $me=shift;
     my $text=$me->node->[2][2];
-    $me->rawtext($text);
     $me->thistext($text);
     $me->write_slide;
 }
@@ -333,7 +329,6 @@ sub handle_for_include_html {
     my $me=shift;
     my @text=$me->include_file($me->node->[2][2]);
     my $text=join('',@text);
-    $me->rawtext($text);
     $me->thistext($text);
     $me->write_slide;
 }
@@ -341,7 +336,6 @@ sub handle_for_include_html {
 sub handle_for_img {
     my $me=shift;
     my $img=$me->node->[2][2];
-    $me->rawtext($me->meta->{URL_slides}.'/'.$img);
     $me->thistext("<img src='$img'><br><br>");
     $me->write_slide('no-focus');
 }
@@ -349,7 +343,6 @@ sub handle_for_img {
 sub handle_for_include_code {
     my $me=shift;
     my $inced=$me->include_file($me->node->[2][2]);
-    $me->rawtext($me->node->[2][2].":\n".$inced);
     my $fontsize='100';
     my @lines = split(/\n/,$inced);
     if (@lines > 24) {
@@ -431,7 +424,6 @@ sub handle_for_include_fragment {
 
     my $code=join('',@selected);
 
-    $me->rawtext($file.":\n".$code.($comment?"\n$comment":''));
     $code=~s/</&lt;/g;
     $code=~s/>/&gt;/g;
     $code=~s{////ENDBOLD}{</b></font>}g;
@@ -453,7 +445,6 @@ sub handle_for_run_code {
     my ($dir,$file,$run,$noperl)=$me->run_file($codefile,$args);
 
     my $perl = $noperl ? '' : 'perl ';
-    $me->rawtext($dir."/".$file.":\n".$run);
     $me->thistext("<pre><font color='#00cc00'>~/$dir\$</font> ".$perl."$file $args\n$run</pre>");
     $me->write_slide;
 }
@@ -467,14 +458,12 @@ sub handle_for_include_and_run {
     $inced=~s/>/&gt;/g;
     $inced=~s{^(\s?\d+:) }{<font color='dddddd'>$1</font> }gm;
 
-    $me->rawtext($codefile.":\n".$inced);
     $me->thistext("<pre><font color='#aa0000'>file: $codefile</font>\n$inced</pre>");
     $me->write_slide;
 
     $me->inc_cnt;
 
     my ($dir,$file,$run,$noperl)=$me->run_file($codefile,join(' ',@args));
-    $me->rawtext($dir."/".$file.":\n".$run);
     my $perl = $noperl ? '' : 'perl ';
     $me->thistext("<pre><font color='#00cc00'>~/$dir\$</font> ".$perl."$file $args\n$run</pre>");
     $me->write_slide;
@@ -594,7 +583,6 @@ sub write_lastpage {
     $me->inc_cnt;
     $me->oldtext('');$me->current_heading('');$me->root(undef);
     $me->thistext($me->boilerplate."<h1>__END__</h1>");
-    $me->rawtext($me->title." __END__");
     $me->write_slide(1);
 }
 
@@ -637,16 +625,6 @@ sub next_slide {
 sub prev_slide {
     my $cnt=shift->cnt;
     return sprintf("s%05d",($cnt)-1).".html" if $cnt-1;
-}
-
-sub rawtext {
-    my $me=shift;
-    my $val=shift;
-    return $me->{rawtext} unless $val;
-    $val=~s/\*\*//g;
-    $val=~s/\%\%//g;
-    $val=~s/\@\@//g;
-    return $me->{rawtext}=$val;
 }
 
 =head1 AUTHOR
