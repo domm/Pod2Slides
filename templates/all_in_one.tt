@@ -1,40 +1,14 @@
+<!DOCTYPE html>
 <html>
-<head>
-<META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=utf-8">
-</div>
-
-<style type="text/css">
-body	{ background-color:#ffffff; 	font-family: verdana,arial, helvetica, geneva, sans-serif;}
-h1	{ text-align:center; }
-pre	{ background-color:#eeeeee; border:1px; /*font-weight:bold;*/
-	  border-style:solid; padding:10px; font-size: 1.2em;
-	}
-pre.term	{ background-color:#000000; color:#ffffff; border:1px; /*font-weight:bold;*/
-	  border-style:solid; padding:10px; 
-	}
-li	{ margin-bottom:1.5em; list-style-type:none; }
-ul	{ margin-top:1.5em; }
-code    { font-weight:bold; }
-div.content	{ position:absolute; top:25px; left:5px; width:95% }
-div.topbar	{ position:fixed; top:0px; left:0px; width:100%; z-index:9;
-		  text-align:center; background-color:#cccccc;
-                  border-bottom:1px solid black; text-size:small;
-		}
-div.breadcrumb  { text-size:small; }
-div.topbar a:link, a:visited, a:hover,
-div.breadcrumb a:link, a:visited, a:hover
-         { text-decoration:none; color:#0000ff; }
-
-</style>
-
-<title>[% me.title %]</title>
-
-</head>
-<body>
-<div class='content'>
-
-[% me.all %]
-</div>
-
-</body>
+  <head>
+    <meta charset="utf-8">
+    <title>[% me.title %]</title>
+    <link href="style.css" rel="stylesheet" type="text/css" />
+    <link rel="icon" href="data:image/gif;base64,R0lGODlhAQABAAAAACwAAAAAAQABAAA=">
+  </head>
+  <body class="all">
+    <main>
+      [% me.all %]
+    </main>
+  </body>
 </html>

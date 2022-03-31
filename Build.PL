@@ -17,9 +17,8 @@ my $builder = Module::Build->new(
     tt_files=>{
         'templates/boilerplate.tt'=>'tt/boilerplate.tt',
         'templates/default.tt'=>'tt/default.tt',
-        'templates/fullscreen.tt'=>'tt/fullscreen.tt',
-        'templates/totalfullscreen.tt'=>'tt/totalfullscreen.tt',
         'templates/all_in_one.tt'=>'tt/all_in_one.tt',
+        'templates/style.css'=>'tt/style.css',
     },
     script_files=>[qw(bin/pod2slides.pl)],
     install_path=>{tt=>$ENV{HOME}.'/.pod2slides'},

@@ -1,0 +1,116 @@
+body{
+  background-color:#ffffff;
+  font-family: verdana,arial, helvetica, geneva, sans-serif;
+}
+h1 {
+  text-align:center;
+}
+pre	{
+  background-color:#eeeeee;
+  border:1px;
+  border-style:solid;
+  padding:10px;
+  font-size: 1.2em;
+}
+pre.term {
+  background-color:#000000;
+  color:#ffffff;
+  border:1px;
+  border-style:solid;
+  padding:10px;
+}
+p	{
+  margin-bottom:1.5em;
+  margin-left: 0.5em;
+}
+code {
+  font-weight:bold;
+}
+main {
+  position:absolute;
+  top:25px;
+  left:25px;
+  width:95%
+}
+nav	{
+  position:fixed;
+  top:0px;
+  left:0px;
+  width:100%;
+  z-index:9;
+  text-align:center;
+  background-color:#cccccc;
+  border-bottom: 1px solid black;
+  font-size:small;
+}
+nav a:link, a:visited, a:hover {
+  text-decoration:none;
+  color:#0000ff;
+}
+div.boilerplate {
+  text-align: center;
+  width: 60%;
+  margin-left: auto;
+  margin-right: auto;
+}
+div.row {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
+div.meta span {
+  flex: 25%;
+  margin: 1em;
+}
+ul.start li {
+  font-size: x-large;
+}
+div.boilerplate ul li {
+  display: inline;
+  list-style-type: none;
+}
+div.boilerplate ul li::after {
+  content: " | ";
+}
+div.boilerplate ul li:last-child:after {
+  content: '';
+}
+img {
+  display: block;
+}
+
+/* hide some things in all-in-one-page */
+body.all img {
+  margin: 1em;
+  max-width: 90%;
+}
+body.all div.links {
+  display: none;
+}
+
+/* mobile stuff */
+@media (max-width: 600px) {
+  pre {
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    text-align: justify;
+  }
+  div.meta span {
+    flex: 100%;
+    margin: 0.2em;
+  }
+  div.boilerplate ul {
+    list-style:none;
+    margin: 0;
+    padding:0;
+  }
+  div.boilerplate ul li {
+    display: block;
+    list-style:none;
+  }
+  div.boilerplate ul li::after {
+    content: "";
+  }
+}
+

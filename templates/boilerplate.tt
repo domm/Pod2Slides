@@ -1,22 +1,29 @@
-
 <h1>[% title %]</h1>
 
-<center><table border='0' cellpadding='10'><tr>
-<td align='center'>[% me.meta.Event %]</td>
-<td align='center'>[% me.meta.Location %]</td>
-<td align='center'>[% me.meta.Date %]</td>
-</tr>
-<tr>
-<td align='center'>[% me.meta.Author %]</td>
-<td align='center'><a href='[% me.meta.URL %]'>[% me.meta.URL%]</a></td>
-<td align='center'>[%me.meta.Email %]</td>
-</tr></table>
-<br>
-<h2><a href='s00002.html' rel="nofollow">Start Slideshow</a> | <a href="[% me.meta.archive_name %].html">All in one HTML</a></h2>
-<p style="font-size:smaller">hit "Enter" for next page and "Backspace" to go back</p>
+<div class="boilerplate">
+  <div class="meta">
+    <div class="row">
+      <span>[% me.meta.Event %]</span>
+      <span>[% me.meta.Location %]</span>
+      <span>[% me.meta.Date %]</span>
+    </div>
+    <div class="row">
+      <span>[% me.meta.Author %]</span>
+      <span><a href='[% me.meta.URL %]'>[% me.meta.URL%]</a></span>
+      <span>[%me.meta.Email %]</span>
+    </div>
+  </div>
+  <div class="links">
+    <ul class="start">
+      <li><a href='s00002.html' rel="nofollow">Start Slideshow</a></li>
+      <li><a href="[% me.meta.archive_name %].html">All in one HTML</a></li>
+    </ul>
+    <p class="nav_instructions" style="font-size:smaller">hit "Enter" for next page and "Backspace" to go back</p>
 
-<p style="font-size:15px"><a href='[% me.meta.archive_name %].tar.gz'>Download all slides</a> | <a href='[% me.meta.source_pod %]'>Source POD-File</a></p>
-
-<p style="font-size:15px">URI of slides:<br><a href='[% me.meta.URL_slides %]'>[% me.meta.URL_slides %]</a></p>
-<br><br>
-</center>
+    <ul>
+      <li><a href='[% me.meta.archive_name %].tar.gz'>Download all slides</a></li>
+      <li><a href='[% me.meta.source_pod %]'>Source POD-File</a></li>
+    </ul>
+  </div>
+  <p>Permalink for this talk:<br/><a href='[% me.meta.URL_slides %]'>[% me.meta.URL_slides %]</a></p>
+</div>

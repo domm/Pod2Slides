@@ -9,11 +9,12 @@ use Getopt::Long;
 use base qw(Class::Accessor);
 use Carp;
 use File::Spec::Functions qw(rel2abs);
+use File::Copy qw(copy);
 use Text::Autoformat;
 use Path::Class;
 use utf8;
 
-__PACKAGE__->mk_accessors(qw(file podfile poddir cnt node opts thistext oldtext  tt root meta title head_level current_heading boilerplate has_locallib all));
+__PACKAGE__->mk_accessors(qw(file podfile poddir cnt node opts thistext oldtext  tt root meta title head_level current_heading boilerplate has_locallib all ));
 
 =head1 NAME
 
@@ -45,7 +46,7 @@ sub new {
     # parse options
     my $opts={template=>'default.tt'};
     GetOptions($opts,
-        qw(quiet irc bremse),
+        qw(quiet css),
         qw(template=s include_path=s preview=s),
     );
     $me->opts($opts);
@@ -66,7 +67,7 @@ sub new {
                 INCLUDE_PATH=>[
                     $ENV{HOME}.'/.pod2slides/',
                 #'/home/domm/perl/Pod2Slides/templates',
-                    $me->opts->{'include_path'},    
+                    $me->opts->{'include_path'},
                 ],
             }));
 
@@ -103,6 +104,7 @@ sub generate {
 
     $me->write_all_in_one;
 
+    $me->copy_css;
     $me->make_tarball;
 }
 
@@ -189,10 +191,9 @@ Writes a single slide
 
 =cut
 sub write_slide {
-    my ($me, $dont_add_to_all) = @_;
-    my $no_focus = shift;
+    my ($me, $no_focus, $dont_add_to_all) = @_;
     my $tmpl= $me->opts->{'template'};
-    
+
     my $done;
     $me->tt->process(
 		 $tmpl,
@@ -336,7 +337,7 @@ sub handle_for_include_html {
 sub handle_for_img {
     my $me=shift;
     my $img=$me->node->[2][2];
-    $me->thistext("<img src='$img'><br><br>");
+    $me->thistext("<img src='$img'>");
     $me->write_slide('no-focus');
 }
 
@@ -583,7 +584,7 @@ sub write_lastpage {
     $me->inc_cnt;
     $me->oldtext('');$me->current_heading('');$me->root(undef);
     $me->thistext($me->boilerplate."<h1>__END__</h1>");
-    $me->write_slide(1);
+    $me->write_slide(undef,'dont-add-to-all');
 }
 
 sub make_tarball {
@@ -601,6 +602,13 @@ sub make_tarball {
     system("mv ".$arch." $this_dir");
 
     print "created archive $arch\n" unless $me->opts->{quiet};
+}
+
+sub copy_css {
+    my $self = shift;
+    if ($self->opts->{css} || !-e 'style.css') {
+        copy($ENV{HOME}.'/.pod2slides/style.css', 'style.css');
+    }
 }
 
 =head2 Accessors
