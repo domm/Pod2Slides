@@ -4,7 +4,6 @@
 </div>
 
 <style type="text/css">
-<!--
 body	{ background-color:#ffffff; 	font-family: verdana,arial, helvetica, geneva, sans-serif;}
 h1	{ text-align:center; }
 pre	{ background-color:#eeeeee; border:1px; /*font-weight:bold;*/
@@ -18,7 +17,7 @@ ul	{ margin-top:1.5em; }
 code    { font-weight:bold; }
 div.content	{ position:absolute; top:25px; left:5px; width:95% }
 div.topbar	{ position:fixed; top:0px; left:0px; width:100%; z-index:9;
-		  text-align:center; background-color:#[% me.opts.irc ? 'ff' : 'cc' %]cccc;
+		  text-align:center; background-color:#cccccc;
                   border-bottom:1px solid black; text-size:small;
 		}
 div.breadcrumb  { text-size:small; }
@@ -26,7 +25,6 @@ div.topbar a:link, a:visited, a:hover,
 div.breadcrumb a:link, a:visited, a:hover
          { text-decoration:none; color:#0000ff; }
 
--->
 </style>
 
 <title>[% me.title %]</title>
@@ -35,9 +33,7 @@ div.breadcrumb a:link, a:visited, a:hover
 <body>
 <div class='content'>
 
-<ul>
 [% me.all %]
-</ul>
 </div>
 
 </body>

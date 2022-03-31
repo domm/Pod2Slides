@@ -190,7 +190,7 @@ Writes a single slide
 
 =cut
 sub write_slide {
-    my $me=shift;
+    my ($me, $dont_add_to_all) = @_;
     my $no_focus = shift;
     my $tmpl= $me->opts->{'template'};
     
@@ -211,7 +211,7 @@ sub write_slide {
 
     $me->addtext($me->thistext);
 
-    $me->addall($me->thistext);
+    $me->addall($me->thistext) unless $dont_add_to_all;
 
 }
 
@@ -292,7 +292,7 @@ sub handle_head {
 sub handle_para {
     my ($me,$text)=@_;
     $text=~s|^(https?://.*)|<a href="$1">$1</a>|;
-    $me->thistext("<li>$text</li>\n");
+    $me->thistext("<p>$text</p>\n");
     $me->write_slide;
 }
 sub handle_item { shift->handle_para(@_) }
@@ -595,7 +595,7 @@ sub write_lastpage {
     $me->oldtext('');$me->current_heading('');$me->root(undef);
     $me->thistext($me->boilerplate."<h1>__END__</h1>");
     $me->rawtext($me->title." __END__");
-    $me->write_slide;
+    $me->write_slide(1);
 }
 
 sub make_tarball {
